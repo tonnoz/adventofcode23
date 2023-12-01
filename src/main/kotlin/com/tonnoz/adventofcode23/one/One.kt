@@ -25,11 +25,11 @@ val digitWordsR = mapOf(
   "thgie" to 8,
   "enin" to 9
 )
-fun String.readFileAsLinesUsingUseLines(): List<String> = ClassPathResource(this).file.useLines { it.toList() }
+fun String.readFileAsAList(): List<String> = ClassPathResource(this).file.useLines { it.toList() }
 fun String.firstDigit(): Char = this.first{ aChar -> aChar.isDigit() }
 fun String.lastDigit(): Char = this.last{ aChar -> aChar.isDigit() }
 
-fun String.firstDigitOrDigitWordWindowed(): Int {
+fun String.firstDigitOrDigitWord(): Int {
   for (i in indices) {
     if (this[i].isDigit()) return this[i].digitToInt()
     for ((word, value) in digitWords) {
@@ -41,7 +41,7 @@ fun String.firstDigitOrDigitWordWindowed(): Int {
   return -9999999
 }
 
-fun String.lastDigitOrDigitWordWindowed(): Int {
+fun String.lastDigitOrDigitWord(): Int {
   for (i in this.indices.reversed()) {
     if (this[i].isDigit()) return this[i].digitToInt()
     for ((word, value) in digitWordsR) {
@@ -122,14 +122,14 @@ fun String.lastDigitOrDigitWordNaive(): Int {
 }
 
 fun main(args: Array<String>) {
-  val inputLines = "input.txt".readFileAsLinesUsingUseLines()
+  val inputLines = "inputOne.txt".readFileAsAList()
 
   inputLines
     .sumOf { "${it.firstDigit()}${it.lastDigit()}".toInt() }
     .let { println("solution 1st q: $it") } //solution first problem: 55108
 
   inputLines
-    .sumOf { "${it.firstDigitOrDigitWordWindowed()}${it.lastDigitOrDigitWordWindowed()}".toInt() }
+    .sumOf { "${it.firstDigitOrDigitWord()}${it.lastDigitOrDigitWord()}".toInt() }
     .let { println("solution 2nd q: $it") } //solution second problem: 56324
 
 }
