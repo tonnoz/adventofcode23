@@ -4,6 +4,8 @@ import com.tonnoz.adventofcode23.one.readFileAsAList
 
 val symbols = hashSetOf('@','#', '$', '%', '&', '*', '+', '-', '=', '/')
 
+//*************************** PROBLEM TWO ***************************//
+
 fun main() {
   val input = "inputThree.txt".readFileAsAList()
   problemOne(input)
@@ -68,10 +70,6 @@ fun List<String>.getNumber(iLine:Int, iChar:Int, lineIAddendum: Int, charIAddend
 
 
 
-
-
-
-
 //****************************** PROBLEM ONE ******************************//
 
 private fun problemOne(input: List<String>) {
@@ -87,7 +85,7 @@ private fun problemOne(input: List<String>) {
         continue
       }
       if (isACandidate(input, iLine, iChar)) {
-        val aNumber = line.getNextNumberRightOf(iChar)
+        val aNumber = line.getNextNumberAfterIndex(iChar)
         iChar += aNumber.length
         resultList.add(aNumber.toInt())
         continue
@@ -102,7 +100,7 @@ private fun problemOne(input: List<String>) {
 private fun Char.isASymbol(): Boolean = symbols.contains(this)
 
 private fun isACandidate(input: List<String>, iLine: Int, iChar: Int): Boolean {
-  val aNumber = input[iLine].getNextNumberRightOf(iChar)
+  val aNumber = input[iLine].getNextNumberAfterIndex(iChar)
   return isNumberAdjacentHorizontal(aNumber, input[iLine], iChar) || isNumberAdjacentVerticalOrDiagonal(aNumber, input, iLine, iChar, input[iLine])
 }
 
@@ -123,4 +121,4 @@ fun isNumberAdjacentHorizontal(aNumber: String, line: String, iChar: Int): Boole
   (iChar-1 >= 0 && line[iChar-1].isASymbol()) || (iChar + aNumber.length < line.length && line[iChar + aNumber.length].isASymbol())
 
 
-fun String.getNextNumberRightOf(iChar: Int): String = this.substring(iChar).takeWhile { it.isDigit() }
+fun String.getNextNumberAfterIndex(iChar: Int): String = this.substring(iChar).takeWhile { it.isDigit() }
