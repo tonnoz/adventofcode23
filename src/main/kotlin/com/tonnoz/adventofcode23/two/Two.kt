@@ -43,12 +43,12 @@ fun main() {
 
   games
     .filter { it.rounds.none { gameR -> gameR.isInvalid() } }
-    .fold(0) { acc, curr -> acc + curr.gameNr}
+    .sumOf { it.gameNr }
     .let { println(it) } //answer first problem is 2169
 
   games
     .map { it.toGameExtra() }
-    .fold(0) { acc, curr -> acc + curr.minCubes.values.reduce(Int::times) }
+    .sumOf { it.minCubes.values.reduce(Int::times) }
     .let { println(it) } //answer second problem is 60948
 
 }
