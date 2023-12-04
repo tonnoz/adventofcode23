@@ -9,6 +9,13 @@ const val PIPE = "|"
 
 object Four{
 
+  @JvmStatic
+  fun main(args: Array<String>) {
+    val input = "inputFour.txt".readFileAsAList()
+    problemOne(input)
+    problemTwo(input)
+  }
+
   //PROBLEM 1
 
   private fun Set<Int>.countPoints(): Int =
@@ -32,14 +39,15 @@ object Four{
 
 
   //PROBLEM 2
-  private data class Game(val winningCards: HashSet<Int>, val myCards: HashSet<Int>)
+  data class Game(val winningCards: HashSet<Int>, val myCards: HashSet<Int>)
 
   private fun problemTwo(input:List<String>) {
-    input.map(parseGame())
+    input
+      .parseGame()
       .toTotalScratchCards()
       .let { println("solution to problem two is $it") }
   }
-  private fun parseGame(): (String) -> Game = {
+  private fun List<String>.parseGame(): List<Game> = this.map{
     val line = it.split(COLON, limit = 2).last()
     val (winningCardsString, myCardString) = line.split(PIPE, limit = 2)
     val winningCards = winningCardsString.spacedStringsToCardValues()
@@ -55,13 +63,6 @@ object Four{
       (1..matchingNumbers).forEach{ copies[i + it] += copies[i] } //here we are adding the number of copies of the game to the next games
     }
     return copies.sum()
-  }
-
-  @JvmStatic
-  fun main(args: Array<String>) {
-    val input = "inputFour.txt".readFileAsAList()
-    problemOne(input)
-    problemTwo(input)
   }
 }
 

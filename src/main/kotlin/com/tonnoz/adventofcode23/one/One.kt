@@ -4,6 +4,21 @@ import org.springframework.core.io.ClassPathResource
 fun String.readFileAsAList(): List<String> = ClassPathResource(this).file.useLines { it.toList() }
 
 object One{
+
+  @JvmStatic
+  fun main(args: Array<String>) {
+    val inputLines = "inputOne.txt".readFileAsAList()
+
+    inputLines
+      .sumOf { "${it.firstDigit()}${it.lastDigit()}".toInt() }
+      .let { println("solution 1st q: $it") } //solution first problem: 55108
+
+    inputLines
+      .sumOf { "${it.firstDigitOrDigitWord()}${it.lastDigitOrDigitWord()}".toInt() }
+      .let { println("solution 2nd q: $it") } //solution second problem: 56324
+
+  }
+
   private val digitWords = mapOf(
     "one" to 1,
     "two" to 2,
@@ -51,18 +66,5 @@ object One{
       }
     }
     return -9999999
-  }
-
-  fun main(args: Array<String>) {
-    val inputLines = "inputOne.txt".readFileAsAList()
-
-    inputLines
-      .sumOf { "${it.firstDigit()}${it.lastDigit()}".toInt() }
-      .let { println("solution 1st q: $it") } //solution first problem: 55108
-
-    inputLines
-      .sumOf { "${it.firstDigitOrDigitWord()}${it.lastDigitOrDigitWord()}".toInt() }
-      .let { println("solution 2nd q: $it") } //solution second problem: 56324
-
   }
 }
