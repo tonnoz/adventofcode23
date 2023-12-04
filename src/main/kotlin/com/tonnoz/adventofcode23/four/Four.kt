@@ -17,9 +17,7 @@ object Four{
   }
 
   //PROBLEM 1
-
-  private fun Set<Int>.countPoints(): Int =
-    this.foldIndexed(0) { index, _, _ -> 2.toDouble().pow(index).toInt() }
+  private fun Set<Int>.countPoints(): Int = 2.toDouble().pow(this.size-1).toInt()
 
   private fun String.spacedStringsToCardValues(): HashSet<Int> = this.split(SPACE)
     .filter{ it.isNotEmpty() }
@@ -56,7 +54,7 @@ object Four{
   }
 
   private fun List<Game>.toTotalScratchCards(): Int {
-    val copies = List(this.size) { 1 }.toMutableList()
+    val copies = List(this.size){ 1 }.toMutableList()
     this.forEachIndexed { i, game ->
       val (winningCards, myCards) = game
       val matchingNumbers = myCards.intersect(winningCards).count()
