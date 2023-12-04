@@ -9,27 +9,62 @@ const val PIPE = "|"
 
 object Four{
 
+  //PROBLEM 1
+
   private fun Set<Int>.countPoints(): Int =
-    this.toList().foldIndexed(0) { index, _, _ -> 2.toDouble().pow(index).toInt() }
+    this.foldIndexed(0) { index, _, _ -> 2.toDouble().pow(index).toInt() }
 
   private fun String.spacedStringsToCardValues(): HashSet<Int> = this.split(SPACE)
     .filter{ it.isNotEmpty() }
     .map{ it.trim().toInt() }
     .toHashSet()
 
-  @JvmStatic
-  fun main(args: Array<String>) {
-    val input = "inputFour.txt".readFileAsAList()
+  private fun problemOne(input:List<String>){
     input.sumOf {
       val line = it.split(COLON, limit = 2).last()
       val (winningCardsString, myCardString) = line.split(PIPE, limit = 2)
       val winningCards = winningCardsString.spacedStringsToCardValues()
       val myCards = myCardString.spacedStringsToCardValues()
       winningCards.intersect(myCards).countPoints()
-    }.let { println(it) }
-
+    }.let { println("solution to problem one is $it") }
   }
 
+
+
+  //PROBLEM 2
+  private data class Game(val winningCards: HashSet<Int>, val myCards: HashSet<Int>)
+
+  private fun problemTwo(input:List<String>) {
+    input.map(parseGame())
+      .toTotalScratchCards()
+      .let { println("solution to problem two is $it") }
+  }
+  private fun parseGame(): (String) -> Game = {
+    val line = it.split(COLON, limit = 2).last()
+    val (winningCardsString, myCardString) = line.split(PIPE, limit = 2)
+    val winningCards = winningCardsString.spacedStringsToCardValues()
+    val myCards = myCardString.spacedStringsToCardValues()
+    Game(winningCards, myCards)
+  }
+
+  private fun List<Game>.toTotalScratchCards(): Int {
+    val copies = List(this.size) { 1 }.toMutableList()
+    this.forEachIndexed { i, game ->
+      val (winningCards, myCards) = game
+      val matchingNumbers = myCards.intersect(winningCards).count()
+      (1..matchingNumbers).forEach{ copies[i + it] += copies[i] } //here we are adding the number of copies of the game to the next games
+    }
+    return copies.sum()
+  }
+
+  @JvmStatic
+  fun main(args: Array<String>) {
+    val input = "inputFour.txt".readFileAsAList()
+    problemOne(input)
+    problemTwo(input)
+  }
 }
+
+
 
 
