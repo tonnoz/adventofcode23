@@ -29,3 +29,14 @@ fun <R> List<String>.parts(map: (List<String>) -> R): List<R> = buildList {
  * Converts string to md5 hash.
  */
 fun String.md5(): String = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray())).toString(16)
+
+fun List<List<Long>>.transpose(): List<List<Long>> {
+  if (this.isEmpty() || this.first().isEmpty()) return listOf()
+  val cols = this.first().size
+  val rows = this.size
+  return List(cols) { j ->
+    List(rows) { i ->
+      this[i][j]
+    }
+  }
+}

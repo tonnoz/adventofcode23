@@ -14,7 +14,7 @@ object FiveTwo {
   fun main(args: Array<String>) {
     val time = System.currentTimeMillis()
     val input = "inputFive.txt".readFileAsAList()
-    val seeds = input[0].parseSeeds().parseRangesPart2()
+    val seeds = input[0].parseSeeds().parseRangesPart2() //comment out .parseRangesPart2() to solve part 1
     val maps = listOf(
       "seed-to-soil map:",
       "soil-to-fertilizer map:",
