@@ -1,9 +1,6 @@
 package com.tonnoz.adventofcode23.five
 
 import com.tonnoz.adventofcode23.one.readFileAsAList
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import kotlin.system.measureTimeMillis
 
 object Five {
@@ -13,6 +10,7 @@ object Five {
     val time = measureTimeMillis {
       val input = "inputFive.txt".readFileAsAList()
       val seeds = input[0].parseSeeds()
+      // I like explicit names :)
       val seedToSoilMap = input.parseRanges("seed-to-soil map:", "")
       val soilToFertilizerMap = input.parseRanges("soil-to-fertilizer map:", "")
       val fertilizerToWaterMap = input.parseRanges("fertilizer-to-water map:", "")
