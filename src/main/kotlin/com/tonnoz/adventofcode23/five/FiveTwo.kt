@@ -25,7 +25,7 @@ object FiveTwo {
       "humidity-to-location map:"
     ).map { key -> input.parseRanges(key, "") }
 
-    runBlocking { //runBlocking is needed to use flow (coroutines)
+    runBlocking { //runBlocking is needed in order to use flow (coroutines)
       seeds
         .asFlow() // emit each Long lazily
         .flatMapMerge { it.asFlow() } // use flatMapMerge for parallel processing
@@ -43,14 +43,14 @@ object FiveTwo {
 
   private fun Long.mapSeedToFirstMatchingRange(ranges: List<Range>): Long {
     ranges.asSequence().forEach {
-      if(this < it.sourceRange.first) return@forEach //continue to next elem
+      if(this < it.sourceRange.first) return@forEach //return@forEach is like a "continue" in a for loop
       if(this > it.sourceRange.last) return@forEach
-      return it.transform(this)
+      return this.mapRange(it)
     }
     return this //return seed if no range matches
   }
 
-  private fun Range.transform(seed: Long): Long = this.sourceRange.positionInTheRange(seed) + this.destinationRange.first
+  private fun Long.mapRange(range: Range): Long = range.sourceRange.positionInTheRange(this) + range.destinationRange.first
 
   private fun LongRange.positionInTheRange(number: Long): Long = number - this.first
 
