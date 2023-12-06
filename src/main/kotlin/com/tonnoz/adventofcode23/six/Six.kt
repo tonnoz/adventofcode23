@@ -13,7 +13,7 @@ object Six {
 
   private fun problemTwo(input: List<Long>){
     val time = System.currentTimeMillis()
-    findAllBestHoldTimes(input[0], input[1])
+    waysToWinConstantTime(input[0], input[1])
       .also { println(it) }
     println("Time p2: ${System.currentTimeMillis() - time} ms")
   }
@@ -39,6 +39,15 @@ object Six {
       }
     }
     return possibleHoldTimes.size
+  }
+
+  private fun waysToWinConstantTime(time: Long, minDistance: Long): Long { //by Tim Stockman: https://github.com/timstokman
+    val sqrt = kotlin.math.sqrt(time * time - 4 * minDistance.toDouble())
+    var minPressed = kotlin.math.floor(0.5 * (time - sqrt)).toLong()
+    minPressed += if ((time - minPressed) * minPressed > minDistance) 0 else 1
+    var maxPressed = kotlin.math.floor(0.5 * (sqrt + time)).toLong()
+    maxPressed += if ((time - maxPressed) * maxPressed > minDistance) 1 else 0
+    return kotlin.math.max(0, maxPressed - minPressed)
   }
 
   private fun Int.bestHoldTimeForRace(): Int { // formula parabola
