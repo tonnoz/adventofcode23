@@ -55,8 +55,8 @@ object Seven {
     val (cards, bid) = this.split(" ")
     val cardsInt = cards.map { cardsMap2.indexOf(it) }
     val categoryStrength = (0..< 12).maxOf { maybeJoker ->
-      val cardIntJokerized = cardsInt.map { if (it == 12) maybeJoker else it }
-      val cardsMap = cardIntJokerized.groupingBy { it }.eachCount().toList().sortedByDescending { it.second }
+      val cardsIntJokerized = cardsInt.map { if (it == 12) maybeJoker else it }
+      val cardsMap = cardsIntJokerized.groupingBy { it }.eachCount().toList().sortedByDescending { it.second }
       when {
         cardsMap.size == 1 -> 7
         cardsMap.size == 2 && cardsMap[0].second == 4 -> 6
