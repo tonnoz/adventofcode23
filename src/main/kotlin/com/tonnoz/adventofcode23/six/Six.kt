@@ -2,6 +2,9 @@ package com.tonnoz.adventofcode23.six
 
 import com.tonnoz.adventofcode23.one.readFileAsAList
 import com.tonnoz.adventofcode23.utils.transpose
+import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.sqrt
 
 object Six {
   @JvmStatic
@@ -42,12 +45,12 @@ object Six {
   }
 
   private fun waysToWinConstantTime(time: Long, minDistance: Long): Long { //by Tim Stockman: https://github.com/timstokman
-    val sqrt = kotlin.math.sqrt(time * time - 4 * minDistance.toDouble())
-    var minPressed = kotlin.math.floor(0.5 * (time - sqrt)).toLong()
+    val sqrt = sqrt(time * time - 4 * minDistance.toDouble())
+    var minPressed = floor(0.5 * (time - sqrt)).toLong()
     minPressed += if ((time - minPressed) * minPressed > minDistance) 0 else 1
-    var maxPressed = kotlin.math.floor(0.5 * (sqrt + time)).toLong()
+    var maxPressed = floor(0.5 * (sqrt + time)).toLong()
     maxPressed += if ((time - maxPressed) * maxPressed > minDistance) 1 else 0
-    return kotlin.math.max(0, maxPressed - minPressed)
+    return max(0, maxPressed - minPressed)
   }
 
   private fun Int.bestHoldTimeForRace(): Int { // formula parabola
