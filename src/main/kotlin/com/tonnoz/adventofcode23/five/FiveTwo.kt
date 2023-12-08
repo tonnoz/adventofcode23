@@ -16,12 +16,8 @@ object FiveTwo {
     val input = "inputFive.txt".readInput()
     val seeds = input[0].parseSeeds().parseRangesPart2() //comment out .parseRangesPart2() to solve part 1
     val maps = listOf(
-      "seed-to-soil map:",
-      "soil-to-fertilizer map:",
-      "fertilizer-to-water map:",
-      "water-to-light map:",
-      "light-to-temperature map:",
-      "temperature-to-humidity map:",
+      "seed-to-soil map:", "soil-to-fertilizer map:", "fertilizer-to-water map:",
+      "water-to-light map:", "light-to-temperature map:", "temperature-to-humidity map:",
       "humidity-to-location map:"
     ).map { key -> input.parseRanges(key, "") }
 
@@ -36,11 +32,8 @@ object FiveTwo {
   }
 
   private data class Range(val sourceRange: LongRange, val destinationRange: LongRange)
-
   private fun List<Long>.parseRangesPart2() : List<LongRange> = this.windowed(2,2).map {it.first()..<it.first() + it.last() }
-
   private fun String.parseSeeds() : List<Long> = "\\d+".toRegex().findAll(this).map { it.value.toLong() }.toList()
-
   private fun Long.mapSeedToFirstMatchingRange(ranges: List<Range>): Long {
     ranges.asSequence().forEach {
       if(this < it.sourceRange.first) return@forEach //return@forEach is like a "continue" in a for loop
@@ -49,11 +42,8 @@ object FiveTwo {
     }
     return this //return seed if no range matches
   }
-
   private fun Long.mapRange(range: Range): Long = range.sourceRange.positionInTheRange(this) + range.destinationRange.first
-
   private fun LongRange.positionInTheRange(number: Long): Long = number - this.first
-
   private fun List<String>.parseRanges(startLine:String, endLine:String): List<Range> {
     val startI = this.indexOfFirst { it.startsWith(startLine) } + 1
     val endI = this.subList(startI+1, this.size).indexOfFirst { it == endLine } + startI + 1
@@ -64,5 +54,4 @@ object FiveTwo {
       Range(sourceRange, destinationRange)
     }
   }
-
 }
