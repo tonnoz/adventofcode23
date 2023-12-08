@@ -1,13 +1,13 @@
 package com.tonnoz.adventofcode23.eight
 
-import com.tonnoz.adventofcode23.one.readFileAsAList
+import com.tonnoz.adventofcode23.utils.readInput
 
 
 object EightTwo {
 
   @JvmStatic
   fun main(args: Array<String>) {
-    val input = "inputEight.txt".readFileAsAList()
+    val input = "inputEight.txt".readInput()
     problemTwo(input)
   }
 

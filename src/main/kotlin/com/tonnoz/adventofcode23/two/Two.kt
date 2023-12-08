@@ -1,6 +1,7 @@
 package com.tonnoz.adventofcode23.two
 
-import com.tonnoz.adventofcode23.one.readFileAsAList
+import com.tonnoz.adventofcode23.utils.readInput
+
 typealias Color = String
 
 const val SPACE = " "
@@ -11,7 +12,7 @@ object Two {
 
   @JvmStatic
   fun main(args: Array<String>) {
-    val input = "inputTwo.txt".readFileAsAList()
+    val input = "inputTwo.txt".readInput()
     val games = input.map { it.toGame() }
 
     games

@@ -1,9 +1,9 @@
 package com.tonnoz.adventofcode23.one
 
-import org.springframework.core.io.ClassPathResource
+import com.tonnoz.adventofcode23.utils.readInput
+
 object OneNaive {
 
-  private fun String.readFileAsAList(): List<String> = ClassPathResource(this).file.useLines { it.toList() }
   private fun String.firstDigit(): Char = this.first { aChar -> aChar.isDigit() }
   private fun String.lastDigit(): Char = this.last { aChar -> aChar.isDigit() }
 
@@ -77,7 +77,7 @@ object OneNaive {
   }
 
   fun main(args: Array<String>) {
-    val inputLines = "inputOne.txt".readFileAsAList()
+    val inputLines = "inputOne.txt".readInput()
 
     inputLines
       .sumOf { "${it.firstDigit()}${it.lastDigit()}".toInt() }

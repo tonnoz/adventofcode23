@@ -1,6 +1,6 @@
 package com.tonnoz.adventofcode23.five
 
-import com.tonnoz.adventofcode23.one.readFileAsAList
+import com.tonnoz.adventofcode23.utils.readInput
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapMerge
@@ -13,7 +13,7 @@ object FiveTwo {
   @JvmStatic
   fun main(args: Array<String>) {
     val time = System.currentTimeMillis()
-    val input = "inputFive.txt".readFileAsAList()
+    val input = "inputFive.txt".readInput()
     val seeds = input[0].parseSeeds().parseRangesPart2() //comment out .parseRangesPart2() to solve part 1
     val maps = listOf(
       "seed-to-soil map:",

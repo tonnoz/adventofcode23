@@ -1,8 +1,8 @@
 package com.tonnoz.adventofcode23.four
 
-import com.tonnoz.adventofcode23.one.readFileAsAList
 import com.tonnoz.adventofcode23.two.COLON
 import com.tonnoz.adventofcode23.two.SPACE
+import com.tonnoz.adventofcode23.utils.readInput
 import kotlin.math.pow
 
 const val PIPE = "|"
@@ -11,7 +11,7 @@ object Four{
 
   @JvmStatic
   fun main(args: Array<String>) {
-    val input = "inputFour.txt".readFileAsAList()
+    val input = "inputFour.txt".readInput()
     problemOne(input)
     problemTwo(input)
   }

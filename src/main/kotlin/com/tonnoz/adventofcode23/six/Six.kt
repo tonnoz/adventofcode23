@@ -1,6 +1,6 @@
 package com.tonnoz.adventofcode23.six
 
-import com.tonnoz.adventofcode23.one.readFileAsAList
+import com.tonnoz.adventofcode23.utils.readInput
 import com.tonnoz.adventofcode23.utils.transpose
 import kotlin.math.floor
 import kotlin.math.max
@@ -9,7 +9,7 @@ import kotlin.math.sqrt
 object Six {
   @JvmStatic
   fun main(args: Array<String>) {
-    val input = "inputSix.txt".readFileAsAList()
+    val input = "inputSix.txt".readInput()
     problemOne(input.parseRaces())
     problemTwo(input.parseRaces2())
   }

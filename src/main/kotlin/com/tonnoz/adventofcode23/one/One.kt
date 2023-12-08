@@ -1,13 +1,11 @@
 package com.tonnoz.adventofcode23.one
 
-import org.springframework.core.io.ClassPathResource
-fun String.readFileAsAList(): List<String> = ClassPathResource(this).file.useLines { it.toList() }
-
+import com.tonnoz.adventofcode23.utils.readInput
 object One{
 
   @JvmStatic
   fun main(args: Array<String>) {
-    val inputLines = "inputOne.txt".readFileAsAList()
+    val inputLines = "inputOne.txt".readInput()
 
     inputLines
       .sumOf { "${it.firstDigit()}${it.lastDigit()}".toInt() }

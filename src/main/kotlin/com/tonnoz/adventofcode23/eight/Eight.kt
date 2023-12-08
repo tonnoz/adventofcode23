@@ -1,6 +1,6 @@
 package com.tonnoz.adventofcode23.eight
 
-import com.tonnoz.adventofcode23.one.readFileAsAList
+import com.tonnoz.adventofcode23.utils.readInput
 
 
 object Eight {
@@ -9,7 +9,7 @@ object Eight {
 
   @JvmStatic
   fun main(args: Array<String>) {
-    val input = "inputEight.txt".readFileAsAList()
+    val input = "inputEight.txt".readInput()
     problemOne(input)
 //    problemTwo(input)
   }

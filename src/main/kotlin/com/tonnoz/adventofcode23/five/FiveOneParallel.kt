@@ -1,6 +1,6 @@
 package com.tonnoz.adventofcode23.five
 
-import com.tonnoz.adventofcode23.one.readFileAsAList
+import com.tonnoz.adventofcode23.utils.readInput
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -11,7 +11,7 @@ object FiveOneParallel {
   @JvmStatic
   fun main(args: Array<String>) {
     val time = measureTimeMillis {
-      val input = "inputFive.txt".readFileAsAList()
+      val input = "inputFive.txt".readInput()
       val seeds = input[0].parseSeeds()
       val maps = listOf(
         "seed-to-soil map:",
