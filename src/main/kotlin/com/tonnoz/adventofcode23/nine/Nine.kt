@@ -9,21 +9,36 @@ object Nine {
   fun main(args: Array<String>) {
     val input = "inputNine.txt".readInput()
     problemOne(input)
+    problemTwo(input)
+  }
+
+  private fun problemTwo(input: List<String>) {
+    val time = measureTimeMillis {
+      input.sumOf { aLine ->
+        val numbers = aLine.split(" ").map { it.toLong() }
+        buildNumbersSequenceLeft(numbers).map { it.first() }.sum()
+      }.let { println(it) }
+    }
+    println("Time p2: $time ms")
   }
 
   private fun problemOne(input: List<String>) {
     val time = measureTimeMillis {
       input.sumOf { aLine ->
         val numbers = aLine.split(" ").map { it.toLong() }
-        buildNumbersSequence(numbers).map { it.last() }.sum()
+        buildNumbersSequenceRight(numbers).map { it.last() }.sum()
       }.let { println(it) }
     }
     println("Time p1: $time ms")
   }
 
-  private fun buildNumbersSequence(numbers: List<Long>): Sequence<List<Long>> = generateSequence(numbers) {
-    nums -> nums.windowed(2) { it[1] - it[0] }.takeIf { !it.all { num -> num == 0L } }
+  private fun buildNumbersSequenceRight(numbers: List<Long>): Sequence<List<Long>> = numbers.buildNumbersSequences(::rtl)
+  private fun buildNumbersSequenceLeft(numbers: List<Long>): Sequence<List<Long>> = numbers.buildNumbersSequences(::ltr)
+  private fun List<Long>.buildNumbersSequences(windowedArg: (List<Long>) -> Long)= generateSequence(this) {
+    nums -> nums.windowed(2) { windowedArg(it) }.takeIf { !it.all { num -> num == 0L } }
   }
+  private fun ltr(longs: List<Long>) = longs[0] - longs[1]
+  private fun rtl(longs: List<Long>) = longs[1] - longs[0]
 
   private fun problemOneIter(input:List<String>){
     val time = measureTimeMillis {
