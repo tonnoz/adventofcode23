@@ -10,10 +10,6 @@ object Day11 {
   @JvmStatic
   fun main(args: Array<String>) {
     val input = "input11.txt".readInput().toCharMatrix()
-    part1(input)
-  }
-
-  fun part1(input: ArrayList<CharArray>) {
     val time = measureTimeMillis {
       val (universe, galaxyPairs) = createUniverseAndGalaxyPairs(input)
       val galaxyPairsWithDistance = updateGalaxyPairsWithDistances(galaxyPairs, universe)
@@ -41,12 +37,8 @@ object Day11 {
     return colDistance + rowDistance
   }
 
-  private fun countNrExpandedSpace(
-    smallI: Int,
-    bigI: Int,
-    universe: List<List<Galaxy>>,
-    isExpandedFunction: (List<List<Galaxy>>, Int) -> Int
-  )= (smallI..<bigI).sumOf { isExpandedFunction(universe, it) }
+  private fun countNrExpandedSpace(smallI: Int, bigI: Int, universe: List<List<Galaxy>>, isExpandedFunction: (List<List<Galaxy>>, Int) -> Int)=
+    (smallI..<bigI).sumOf { isExpandedFunction(universe, it) }
 
 
   private fun Boolean.toInt() = if(this) 1 else 0
@@ -61,11 +53,9 @@ object Day11 {
 
   private fun createUniverseAndGalaxyPairs(input: ArrayList<CharArray>): Pair<List<List<Galaxy>>, Set<GalaxyPair>> {
     var counter = FIRST_CHAR
-    val universe = input.mapIndexed { rowI, row ->
-      row.mapIndexed { columnI, aChar ->
-        if (aChar == '#') Galaxy(rowI, columnI, counter++.toChar()) else Galaxy(rowI, columnI, aChar)
-      }
-    }
+    val universe = input.mapIndexed { rowI, row -> row.mapIndexed { columnI, aChar ->
+      if (aChar == '#') Galaxy(rowI, columnI, counter++.toChar()) else Galaxy(rowI, columnI, aChar)
+    }}
     return Pair(universe, createGalaxyPairs(counter, universe))
   }
 
