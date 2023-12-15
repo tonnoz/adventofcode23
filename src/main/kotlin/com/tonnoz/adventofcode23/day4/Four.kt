@@ -1,7 +1,7 @@
-package com.tonnoz.adventofcode23.four
+package com.tonnoz.adventofcode23.day4
 
-import com.tonnoz.adventofcode23.two.COLON
-import com.tonnoz.adventofcode23.two.SPACE
+import com.tonnoz.adventofcode23.day2.COLON
+import com.tonnoz.adventofcode23.day2.SPACE
 import com.tonnoz.adventofcode23.utils.readInput
 import kotlin.math.pow
 

@@ -1,4 +1,4 @@
-package com.tonnoz.adventofcode23.eleven
+package com.tonnoz.adventofcode23.day11
 
 import com.tonnoz.adventofcode23.utils.readInput
 import com.tonnoz.adventofcode23.utils.toCharMatrix

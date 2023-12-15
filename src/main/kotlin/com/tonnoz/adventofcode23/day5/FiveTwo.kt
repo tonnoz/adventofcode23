@@ -1,4 +1,4 @@
-package com.tonnoz.adventofcode23.five
+package com.tonnoz.adventofcode23.day5
 
 import com.tonnoz.adventofcode23.utils.readInput
 import kotlinx.coroutines.FlowPreview

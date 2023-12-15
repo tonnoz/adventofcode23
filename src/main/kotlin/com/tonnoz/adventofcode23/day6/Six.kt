@@ -1,4 +1,4 @@
-package com.tonnoz.adventofcode23.six
+package com.tonnoz.adventofcode23.day6
 
 import com.tonnoz.adventofcode23.utils.readInput
 import com.tonnoz.adventofcode23.utils.transpose

@@ -1,4 +1,4 @@
-package com.tonnoz.adventofcode23.nine
+package com.tonnoz.adventofcode23.day9
 
 import com.tonnoz.adventofcode23.utils.readInput
 import kotlin.system.measureTimeMillis

@@ -1,4 +1,4 @@
-package com.tonnoz.adventofcode23.eight
+package com.tonnoz.adventofcode23.day8
 
 import com.tonnoz.adventofcode23.utils.readInput
 

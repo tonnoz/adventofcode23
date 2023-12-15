@@ -1,36 +1,33 @@
-package com.tonnoz.adventofcode23.five
+package com.tonnoz.adventofcode23.day5
 
 import com.tonnoz.adventofcode23.utils.readInput
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import kotlin.system.measureTimeMillis
 
-object FiveOneParallel {
+object Five {
 
   @JvmStatic
   fun main(args: Array<String>) {
     val time = measureTimeMillis {
       val input = "inputFive.txt".readInput()
       val seeds = input[0].parseSeeds()
-      val maps = listOf(
-        "seed-to-soil map:",
-        "soil-to-fertilizer map:",
-        "fertilizer-to-water map:",
-        "water-to-light map:",
-        "light-to-temperature map:",
-        "temperature-to-humidity map:",
-        "humidity-to-location map:"
-      ).map { key -> input.parseRanges(key, "") }
-      // Use coroutines for parallel processing
-      val lowestLocation = runBlocking {
-        seeds.map { seed ->
-          async(Dispatchers.Default){ //Dispatchers.Default is the best for CPU intensive tasks
-            maps.fold(seed) { acc, map -> checkSeedAgainstRanges(acc, map) }
-          }
-        }.minOf { it.await() }
-      }
-      println("lowest location: $lowestLocation")
+      // I like explicit names :)
+      val seedToSoilMap = input.parseRanges("seed-to-soil map:", "")
+      val soilToFertilizerMap = input.parseRanges("soil-to-fertilizer map:", "")
+      val fertilizerToWaterMap = input.parseRanges("fertilizer-to-water map:", "")
+      val waterToLightMap = input.parseRanges("water-to-light map:", "")
+      val lightToTemperatureMap = input.parseRanges("light-to-temperature map:", "")
+      val temperatureToHumidityMap = input.parseRanges("temperature-to-humidity map:", "")
+      val humidityToLocationMap = input.parseRanges("humidity-to-location map:", "")
+      seeds.asSequence()
+        .map { checkSeedAgainstRanges(it, seedToSoilMap) }
+        .map { checkSeedAgainstRanges(it, soilToFertilizerMap) }
+        .map { checkSeedAgainstRanges(it, fertilizerToWaterMap) }
+        .map { checkSeedAgainstRanges(it, waterToLightMap) }
+        .map { checkSeedAgainstRanges(it, lightToTemperatureMap) }
+        .map { checkSeedAgainstRanges(it, temperatureToHumidityMap) }
+        .map { checkSeedAgainstRanges(it, humidityToLocationMap) }
+        .min()
+        .let { println("lowest location: $it") }
     }
     println("milliseconds elapsed: $time")
   }

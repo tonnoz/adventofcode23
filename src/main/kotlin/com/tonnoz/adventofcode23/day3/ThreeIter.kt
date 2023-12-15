@@ -1,4 +1,4 @@
-package com.tonnoz.adventofcode23.three
+package com.tonnoz.adventofcode23.day3
 
 //iterative version of problem two
 object threeIter {
