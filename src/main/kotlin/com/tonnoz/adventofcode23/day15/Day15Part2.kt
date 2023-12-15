@@ -44,10 +44,11 @@ object Day15Part2 {
     box.replaceOrAddLensWithLabel(label, lens)
   }
 
-  private fun MutableMap<BoxNr, Box>.minusOp(hashedLabel: Int, label: String) {
-    this[hashedLabel]?.removeFirstLensWithLabel(label)
-    if (this[hashedLabel] != null && this[hashedLabel]!!.lensesBox.size == 0) this.remove(hashedLabel)
-  }
+  private fun MutableMap<BoxNr, Box>.minusOp(hashedLabel: Int, label: String) =
+    this[hashedLabel]?.let { box ->
+      box.removeFirstLensWithLabel(label)
+      if (box.lensesBox.isEmpty()) this.remove(hashedLabel)
+    }
 
   infix operator fun Long.plus(other: MutableMap.MutableEntry<BoxNr, Box>): Long =
     other.value.lensesBox.foldIndexed(0L) { i, acc, lens ->
