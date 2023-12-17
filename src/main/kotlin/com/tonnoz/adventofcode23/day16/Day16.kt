@@ -14,8 +14,7 @@ object Day16 {
     val time = measureTimeMillis {
       val contraption = input.mapIndexed{i, row -> row.mapIndexed{j, value -> Cell(i, j, value)}}
       val memory = mutableMapOf<Cell,List<Direction>>()
-      contraption[0][0].energized = true
-      go(contraption[0][0], contraption, memory, Direction.DOWN)
+      go(contraption[0][0], contraption, memory, Direction.RIGHT)
       contraption.flatMap { it.filter { it.energized } }.count().println()
     //      PRINT COLORED MATRIX :)
     //      contraption.forEach { row -> row.forEach { print(if(it.energized) it.value.bold("33") else it.value) }; println("") }
@@ -41,18 +40,22 @@ object Day16 {
      UP, DOWN, LEFT, RIGHT
   }
 
-  private fun go(cell: Cell, contraption: List<List<Cell>>, memory: MutableMap<Cell, List<Direction>>, direction: Direction = Direction.LEFT) {
-    val nextCell = cell.nextCell(direction, contraption) ?: return
-    if(memory[nextCell]?.contains(direction) == true) return
-    memory[nextCell] = memory[nextCell]?.plus(direction) ?: listOf(direction)
-    nextCell.energized = true
-    val nextMoves = when (nextCell.value) {
+  private fun go(cell: Cell, contraption: List<List<Cell>>, memory: MutableMap<Cell, List<Direction>>, direction: Direction) {
+    if(memory[cell]?.contains(direction) == true) return
+    cell.energized = true
+    memory[cell] = memory[cell]?.plus(direction) ?: listOf(direction)
+
+    val nextMoves = when (cell.value) {
       '.' -> listOf(direction)
-      '|' , '-' -> split(nextCell, direction)
-      '/','\\' -> listOf(angle(nextCell, direction))
-      else -> throw IllegalArgumentException("Invalid cell: $nextCell")
+      '|' , '-' -> split(cell, direction)
+      '/','\\' -> listOf(angle(cell, direction))
+      else -> throw IllegalArgumentException("Invalid cell: $cell")
     }
-    nextMoves.forEach { go(nextCell, contraption, memory, it) }
+     nextMoves.forEach {
+       cell.nextCell(it, contraption)?.let { nextCell ->
+         go(nextCell, contraption, memory, it)
+       }
+     }
   }
 
   private fun split(cell: Cell, direction: Direction): List<Direction> {
