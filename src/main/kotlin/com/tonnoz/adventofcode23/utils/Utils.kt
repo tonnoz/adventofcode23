@@ -7,6 +7,8 @@ import java.security.MessageDigest
 
 fun String.readInput() = File("src/main/resources", this).readLines()
 
+fun String.readCharMatrix() = this.readInput().toCharMatrix()
+
 fun List<String>.toCharMatrix() = ArrayList<CharArray>(this.map { it.toCharArray() })
 
 fun String.readInputSpaceDelimited(): List<List<String>> =
