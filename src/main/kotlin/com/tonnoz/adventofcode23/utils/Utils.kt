@@ -1,5 +1,6 @@
 package com.tonnoz.adventofcode23.utils
 
+import com.tonnoz.adventofcode23.day17.Day17
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -47,3 +48,39 @@ fun List<List<Long>>.transpose(): List<List<Long>> {
     }
   }
 }
+
+//private fun List<List<Day17.Block>>.printCity(current: Day17.Block? = null, visited: MutableMap<Day17.Block, Int>) = this
+//  .forEach { row ->
+//    row.forEach {
+//      when{
+//        it == current -> print("[${it.dir?.toChar()?.bold("95")}]")
+//        visited.contains(it) -> print("[${it.minHeatLoss.bold("93")}]")
+//        else -> print("[${if(it.minHeatLoss  == Int.MAX_VALUE) "X" else  it.minHeatLoss}]")
+//      }
+//    }
+//    println("")
+//  }.also { println("") }
+//
+//private fun List<List<Day17.Block>>.printVisited(current: MutableList<Day17.Block>, visited: MutableMap<Day17.Block, Int>) = this
+//  .forEach { row ->
+//    row.forEach {
+//      when{
+//          it.col == 0 && it.row == 0 -> print("[${"S".bold("91")}${it.minHeatLoss.toChar().bold("93")}]")
+//        it in current -> print("[${it.minHeatLoss.bold("91")}${it.minHeatLoss.toChar().bold("93")}]")
+//        visited.contains(it) -> print("[${it.minHeatLoss.bold("95")}${it.minHeatLoss.toChar().bold("93")}]")
+//        else -> print("[${if(it.minHeatLoss == Int.MAX_VALUE) "X" else  it.minHeatLoss} ]")
+//      }
+//    }
+//    println("")
+//  }.also { println("") }
+//
+//private fun List<List<Day17.Block>>.printSolutionPath(current: MutableList<Day17.Block>) = this
+//  .forEach { row ->
+//    row.forEach {
+//      when{
+//        it in current -> print("[${it.minHeatLoss.bold("91")}${it.minHeatLoss.toChar().bold("93")}]")
+//        else -> print("[${if(it.minHeatLoss == Int.MAX_VALUE) "X" else  it.minHeatLoss} ]")
+//      }
+//    }
+//    println("")
+//  }.also { println("") }
