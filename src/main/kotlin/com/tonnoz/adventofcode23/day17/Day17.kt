@@ -25,6 +25,7 @@ object Day17 {
       RIGHT -> '→'
     }
   }
+
   data class Block(val row: Int, val col: Int, var dir: Direction? = null, var minHeatLoss: Int = Int.MAX_VALUE) {
     override fun equals(other: Any?): Boolean {
       return when {
@@ -43,7 +44,8 @@ object Day17 {
   private fun calculateShortestPath(city: List<List<Int>>, getCandidates: (Block, List<List<Int>>) -> List<Block>): Int {
     val visited = mutableMapOf<Block, Int>()
     val pq = PriorityQueue<Block>(compareBy { it.minHeatLoss })
-    val start = Block(0, 0, null, 0)
+    val start = Block(0, 0, minHeatLoss =  0)
+    val end = Block(city.size - 1, city[0].size - 1)
     pq.add(start)
     while (pq.isNotEmpty()) {
       val cur = pq.poll()
@@ -56,7 +58,7 @@ object Day17 {
         pq.add(block)
       }
     }
-    return Direction.entries.minOf { visited.getOrDefault(Block(city.size - 1, city[0].size - 1, it), Int.MAX_VALUE) }
+    return Direction.entries.minOf { visited.getOrDefault(end.copy(dir =  it), Int.MAX_VALUE) }
   }
 
   private fun isExit(block: Block, city: List<List<Int>>) = block.col == city[0].size && block.row == city.size
