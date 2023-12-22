@@ -4,6 +4,8 @@ import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
 
+fun List<String>.toListOfInts() = this.map { row -> row.map { col -> col.toString().toInt() } }
+
 
 fun String.readInput() = File("src/main/resources", this).readLines()
 
