@@ -21,7 +21,7 @@ object Day19 {
   private fun part1(input: List<String>): Long {
     val (workflowsS, ratingsS) = input.splitByEmptyLine()
     val ratings = parseRatings(ratingsS)
-    val workflows = parseWorkFlows(workflowsS)
+    val workflows = parseWorkflows(workflowsS)
     return processWorkflows(workflows, ratings)
   }
 
@@ -62,7 +62,7 @@ object Day19 {
       }
     )
 
-  private fun parseWorkFlows(workflowsS: List<String>) = workflowsS.map { workflow ->
+  private fun parseWorkflows(workflowsS: List<String>) = workflowsS.map { workflow ->
     val (name, rulesS) = workflow.dropLast(1).split("{")
     val rulesSplit = rulesS.split(",")
     val rules = rulesSplit.dropLast(1).map { rule ->

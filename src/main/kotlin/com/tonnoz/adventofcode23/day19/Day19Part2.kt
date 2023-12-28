@@ -30,7 +30,7 @@ object Day19Part2 {
 
   private fun part2(input: List<String>): Long {
     val (workflowsS, _) = input.splitByEmptyLine()
-    val workflows = parseWorkFlows(workflowsS)
+    val workflows = parseWorkflows(workflowsS)
     val initialRanges = Ranges(1..4000, 1..4000, 1..4000, 1..4000, "in")
     return processWorkflows(workflows, initialRanges)
   }
@@ -66,6 +66,7 @@ object Day19Part2 {
 
   private fun Ranges.isInvalid() =
     listOf(this.x, this.m, this.a, this.s).any { it.isInvalid() } || this.isFinalState()
+
   private fun Ranges.isFinalState() = this.wfName == "A" || this.wfName == "R"
   private fun IntRange.isInvalid() = this.first > this.last
 
@@ -78,7 +79,7 @@ object Day19Part2 {
   private fun List<String>.splitByEmptyLine() =
     this.takeWhile { it.isNotEmpty() } to this.dropWhile { it.isNotEmpty() }.drop(1)
 
-  private fun parseWorkFlows(workflowsS: List<String>) = workflowsS.map { workflow ->
+  private fun parseWorkflows(workflowsS: List<String>) = workflowsS.map { workflow ->
     val (name, rulesS) = workflow.dropLast(1).split("{")
     val rulesSplit = rulesS.split(",")
     val rules = rulesSplit.dropLast(1).map { rule ->
