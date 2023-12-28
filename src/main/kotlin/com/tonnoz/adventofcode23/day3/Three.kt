@@ -73,7 +73,7 @@ object Three {
         else null
       }
     }.sum().let {
-      println("the solution to problem two is: $it") //84900879
+      println("the solution to problem two is: $it")
     }
   }
 

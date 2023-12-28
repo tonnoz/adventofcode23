@@ -8,7 +8,7 @@ object Five {
   @JvmStatic
   fun main(args: Array<String>) {
     val time = measureTimeMillis {
-      val input = "inputFive.txt".readInput()
+      val input = "input5.txt".readInput()
       val seeds = input[0].parseSeeds()
       // I like explicit names :)
       val seedToSoilMap = input.parseRanges("seed-to-soil map:", "")

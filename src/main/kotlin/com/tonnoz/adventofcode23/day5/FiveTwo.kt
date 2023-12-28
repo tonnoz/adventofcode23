@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.reduce
 import kotlinx.coroutines.runBlocking
 
-object FiveTwo {
+object FiveTwo { //leave an extra empty line in the input file!
   @OptIn(FlowPreview::class)
   @JvmStatic
   fun main(args: Array<String>) {
     val time = System.currentTimeMillis()
-    val input = "inputFive.txt".readInput()
+    val input = "input5.txt".readInput()
     val seeds = input[0].parseSeeds().parseRangesPart2() //comment out .parseRangesPart2() to solve part 1
     val maps = listOf(
       "seed-to-soil map:", "soil-to-fertilizer map:", "fertilizer-to-water map:",

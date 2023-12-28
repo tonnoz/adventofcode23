@@ -18,12 +18,12 @@ object Two {
     games
       .filter { it.rounds.none { gameR -> gameR.isInvalid() } }
       .sumOf { it.gameNr }
-      .let { println(it) } //answer first problem is 2169
+      .let { println(it) } //answer first problem
 
     games
       .map { it.toGameExtra() }
       .sumOf { it.minCubes.values.reduce(Int::times) }
-      .let { println(it) } //answer second problem is 60948
+      .let { println(it) } //answer second problem
   }
 
   //PROBLEM ONE

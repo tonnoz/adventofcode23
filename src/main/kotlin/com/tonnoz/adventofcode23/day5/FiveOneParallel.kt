@@ -11,7 +11,7 @@ object FiveOneParallel {
   @JvmStatic
   fun main(args: Array<String>) {
     val time = measureTimeMillis {
-      val input = "inputFive.txt".readInput()
+      val input = "input5.txt".readInput()
       val seeds = input[0].parseSeeds()
       val maps = listOf(
         "seed-to-soil map:",
@@ -22,10 +22,9 @@ object FiveOneParallel {
         "temperature-to-humidity map:",
         "humidity-to-location map:"
       ).map { key -> input.parseRanges(key, "") }
-      // Use coroutines for parallel processing
-      val lowestLocation = runBlocking {
+      val lowestLocation = runBlocking { // Use coroutines for parallel processing
         seeds.map { seed ->
-          async(Dispatchers.Default){ //Dispatchers.Default is the best for CPU intensive tasks
+          async(Dispatchers.Default) { //Dispatchers.Default is the best for CPU intensive tasks
             maps.fold(seed) { acc, map -> checkSeedAgainstRanges(acc, map) }
           }
         }.minOf { it.await() }
