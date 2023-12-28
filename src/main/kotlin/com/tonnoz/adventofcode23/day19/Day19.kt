@@ -8,7 +8,7 @@ object Day19 {
 
   data class Workflow(val name: String, val rules: List<Rule>)
   data class Rule(val part: Char, val next: String, val condition: ((Char, Int) -> Boolean)? = null) {
-    fun check(aPart: Char, aRating: Int) = condition?.invoke(aPart, aRating) ?: true
+    fun check(aPart: Char, aRating: Int?) = if(aRating == null) false else condition?.invoke(aPart, aRating) ?: true
   }
   data class PartsRating(val parts: List<Map<Char, Int>>)
 
@@ -32,9 +32,14 @@ object Day19 {
       val (partListIndex, workflow) = toProcess.removeFirst()
       val partMap = ratings.parts[partListIndex]
       for (rule in workflow.rules) {
-        if (processLastRule(rule, partMap, partListIndex, acceptedParts, workflows, toProcess)) break
-        val rating = partMap[rule.part] ?: continue
-        if (processRule(rule, rating, partMap, partListIndex, acceptedParts, workflows, toProcess)) break
+        when {
+          rule.next == "R" && rule.part == '*' -> { break }
+          rule.next == "A" && rule.part == '*' -> { acceptedParts.addAll(partMap.values); break }
+                              rule.part == '*' -> { toProcess.add(Pair(partListIndex, workflows.first { it.name == rule.next })); break }
+          rule.next == "R" && rule.check(rule.part, partMap[rule.part]) -> { break }
+          rule.next == "A" && rule.check(rule.part, partMap[rule.part]) -> { acceptedParts.addAll(partMap.values); break }
+                              rule.check(rule.part, partMap[rule.part]) -> { toProcess.add(Pair(partListIndex, workflows.first { it.name == rule.next })); break }
+        }
       }
     }
     return acceptedParts.sum().toLong()
@@ -43,21 +48,6 @@ object Day19 {
   private fun makePartListToWorkflow(ratings: PartsRating, workflows: List<Workflow>): MutableList<Pair<Int, Workflow>> =
     ratings.parts.indices.map { i -> Pair(i, workflows.first { it.name == "in" }) }.toMutableList()
 
-  private fun processLastRule(rule: Rule, partMap: Map<Char, Int>, partListIndex: Int, acceptedParts: MutableList<Int>, workflows: List<Workflow>, toProcess: MutableList<Pair<Int, Workflow>>) =
-    when {
-      rule.part == '*' && rule.next == "R" -> true
-      rule.part == '*' && rule.next == "A" -> { acceptedParts.addAll(partMap.values); true }
-      rule.part == '*' -> { toProcess.add(0, Pair(partListIndex, workflows.first { it.name == rule.next })); true }
-      else -> false
-    }
-
-  private fun processRule(rule: Rule, rating: Int, partMap: Map<Char, Int>, partListIndex: Int, acceptedParts: MutableList<Int>, workflows: List<Workflow>, toProcess: MutableList<Pair<Int, Workflow>>) =
-    when {
-      rule.check(rule.part, rating) && rule.next == "A" -> { acceptedParts.addAll(partMap.values); true }
-      rule.check(rule.part, rating) && rule.next == "R" -> true
-      rule.check(rule.part, rating) -> { toProcess.add(0, Pair(partListIndex, workflows.first { it.name == rule.next })); true }
-      else -> false
-    }
 
   private fun List<String>.splitByEmptyLine() =
     this.takeWhile { it.isNotEmpty() } to this.dropWhile { it.isNotEmpty() }.drop(1)
@@ -74,7 +64,8 @@ object Day19 {
 
   private fun parseWorkFlows(workflowsS: List<String>) = workflowsS.map { workflow ->
     val (name, rulesS) = workflow.dropLast(1).split("{")
-    val rules = rulesS.split(",").dropLast(1).map { rule ->
+    val rulesSplit = rulesS.split(",")
+    val rules = rulesSplit.dropLast(1).map { rule ->
       val (part, operator) = rule.first() to rule[1]
       val (value, nextWorkflow) = rule.substring(2).split(":")
       when (operator) {
@@ -83,7 +74,7 @@ object Day19 {
         else -> throw IllegalArgumentException("Unknown operator")
       }
     }
-    val fallbackRule = Rule('*', rulesS.split(",").takeLast(1).first())
+    val fallbackRule = Rule('*', rulesSplit.last())
     Workflow(name, rules + fallbackRule)
   }
 }
